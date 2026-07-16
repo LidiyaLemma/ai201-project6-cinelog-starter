@@ -1,7 +1,13 @@
 # PR Response Doc — CineLog Watchlist Feature
 
 ## AI Usage
-<!-- Fill in at the end -->
+I used Claude throughout this project for:
+- Understanding the codebase before touching the review comments (summarizing `models.py`, `collection_service.py`, and `test_collection.py` and identifying naming/testing patterns to follow)
+- Getting unstuck on git issues (forking with the correct branch, resolving Vim/editor issues during interactive rebase, understanding merge conflicts during `git rebase origin/main`)
+- Structuring my `pr-response.md` entries and PR description
+- For Comments 4 and 5 (the design decisions), I was asked clarifying questions rather than given answers directly, and I supplied my own position and reasoning; AI helped me stress-test my Comment 5 argument (alphabetical sort) by pointing out its weakness at scale, which I explicitly acknowledged in my final response rather than hiding it.
+
+
 
 ## Comment 1 — Rename
 **What I did:** Renamed `save_to_watchlist()` to `add_to_watchlist()` in `services/watchlist_service.py`, following the project's verb_to_noun naming convention used by `add_to_collection()`. Updated the docstring and the one call site in `routes/watchlist/watchlist.py` (both the import and the function call).
@@ -57,10 +63,6 @@ Adds a watchlist feature to CineLog, allowing users to save films they want to w
 2. Create a user and film in the database (via Python shell/seed script, or existing fixtures)
 3. Add a film to a user's watchlist:
 
-## AI Usage
-I used Claude throughout this project for:
-- Understanding the codebase before touching the review comments (summarizing `models.py`, `collection_service.py`, and `test_collection.py` and identifying naming/testing patterns to follow)
-- Getting unstuck on git issues (forking with the correct branch, resolving Vim/editor issues during interactive rebase, understanding merge conflicts during `git rebase origin/main`)
-- Structuring my `pr-response.md` entries and PR description
-- For Comments 4 and 5 (the design decisions), I was asked clarifying questions rather than given answers directly, and I supplied my own position and reasoning; AI helped me stress-test my Comment 5 argument (alphabetical sort) by pointing out its weakness at scale, which I explicitly acknowledged in my final response rather than hiding it.
+## Commit History Screenshot
 
+![commit history](commit-history.png)
