@@ -63,3 +63,4 @@ I used Claude throughout this project for:
 - Getting unstuck on git issues (forking with the correct branch, resolving Vim/editor issues during interactive rebase, understanding merge conflicts during `git rebase origin/main`)
 - Structuring my `pr-response.md` entries and PR description
 - For Comments 4 and 5 (the design decisions), I was asked clarifying questions rather than given answers directly, and I supplied my own position and reasoning; AI helped me stress-test my Comment 5 argument (alphabetical sort) by pointing out its weakness at scale, which I explicitly acknowledged in my final response rather than hiding it.
+
