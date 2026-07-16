@@ -37,4 +37,29 @@
 
 **How I verified no conflict remains:** Ran `git status` to confirm a clean working tree post-rebase, with no leftover conflict markers in any file. Ran the full test suite (`pytest tests/ -v`) — all 7 tests pass, including the nonexistent-film test with the corrected UUID-format fake ID.
 ## PR Description
-<!-- Written at the end -->
+
+## What this PR does
+
+Adds a watchlist feature to CineLog, allowing users to save films they want to watch later (separate from their collection of already-watched films). Includes:
+- A `WatchlistEntry` model
+- Service functions: `add_to_watchlist()` (with duplicate prevention) and `get_watchlist()`
+- REST endpoints: `GET /watchlist/<user_id>` and `POST /watchlist/<user_id>/add`
+
+## Design decisions
+
+**Default visibility:** Watchlist entries default to `public=True`. CineLog is a social film-tracking platform, and public-by-default watchlists support the core use case of friends discovering what to watch together. See `pr-response.md` (Comment 4) for full reasoning and the acknowledged privacy tradeoff.
+
+**Sort order:** Watchlists are sorted alphabetically by film title rather than by date added. Since the watchlist API currently has no search/filter capability, alphabetical order is the only way users can scan and locate a specific film. See `pr-response.md` (Comment 5) for the full argument, including where this reasoning is weaker at scale.
+
+## How to manually test
+
+1. Start the app: `python app.py`
+2. Create a user and film in the database (via Python shell/seed script, or existing fixtures)
+3. Add a film to a user's watchlist:
+
+## AI Usage
+I used Claude throughout this project for:
+- Understanding the codebase before touching the review comments (summarizing `models.py`, `collection_service.py`, and `test_collection.py` and identifying naming/testing patterns to follow)
+- Getting unstuck on git issues (forking with the correct branch, resolving Vim/editor issues during interactive rebase, understanding merge conflicts during `git rebase origin/main`)
+- Structuring my `pr-response.md` entries and PR description
+- For Comments 4 and 5 (the design decisions), I was asked clarifying questions rather than given answers directly, and I supplied my own position and reasoning; AI helped me stress-test my Comment 5 argument (alphabetical sort) by pointing out its weakness at scale, which I explicitly acknowledged in my final response rather than hiding it.
