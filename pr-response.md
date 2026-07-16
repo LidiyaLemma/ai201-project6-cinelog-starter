@@ -30,9 +30,11 @@
 
 **Tradeoff acknowledged:** I recognize the maintainer's point that most users primarily want to see what they added recently, and another reviewer raised a similar point about wanting to quickly find the oldest unwatched item. Recency is a valid and probably more common use case than searching for a specific title. My position is weaker at larger scale — as watchlists grow, "what's new" likely matters more to most users day-to-day than alphabetical browsing. If the team wanted, a good middle ground would be to keep alphabetical as the default for now (since there's no search feature to fall back on) while treating a `sort` query parameter (supporting both `date_added` and `title`) as a near-term follow-up, so users aren't locked into either behavior.
 ## Comment 6 — Rebase
-**What conflicted:**
-**How I resolved it:**
-**How I verified no conflict remains:**
+## Comment 6 — Rebase
+**What conflicted:** Running `git rebase origin/main` surfaced an add/add conflict on `.gitignore` (both branches independently added one with slightly different entries), which I resolved by merging both sets of entries into a single file. After that resolved, the rebase completed without further conflict markers — but checking the result afterward, I found that `models.py` had been fully replaced by main's version during the rebase, which silently dropped the `WatchlistEntry` class entirely (since that model never existed on main, only on my feature branch).
 
+**How I resolved it:** I manually re-added the `WatchlistEntry` class to `models.py`, updating `film_id` from `db.Integer` to `db.String(36)` to match the new UUID-based `Film.id` column, consistent with how `CollectionEntry.film_id` was already updated by the refactor. I also updated my test file's fake film ID from an integer placeholder to a UUID-formatted string, and corrected a stale docstring in `add_to_watchlist()` that still described `film_id` as an integer.
+
+**How I verified no conflict remains:** Ran `git status` to confirm a clean working tree post-rebase, with no leftover conflict markers in any file. Ran the full test suite (`pytest tests/ -v`) — all 7 tests pass, including the nonexistent-film test with the corrected UUID-format fake ID.
 ## PR Description
 <!-- Written at the end -->
